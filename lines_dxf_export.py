@@ -112,7 +112,7 @@ class LinesDxfExporter():
 				x2 = round(line[1][0], 3)
 				y2 = round(line[1][1], 3)
 				z2 = round(line[1][2], 3)
-				content += line_fmt.format(x1, y1, 0, x2, y2, 0)
+				content += line_fmt.format(x1, y1, z1, x2, y2, z2)
 
 		return header + content + footer
 		print(header + content + footer)

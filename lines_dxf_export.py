@@ -98,20 +98,20 @@ class LinesDxfExporter():
 		header = "0\nSECTION\n2\nENTITIES"
 		footer = "0\nENDSECT\n0\nEOF"
 
-		line_fmt = "\n0\nLINE\n8\n0\n10\n{}\n20\n{}\n30\n{}\n11\n{}\n21\n{}\n31\n{}"
+		line_fmt = "\n0\nLINE\n8\n 0\n10\n{}\n20\n{}\n30\n{}\n11\n{}\n21\n{}\n31\n{}"
 
 		content = ""
 
 
 		for line in lines:
 			if len(line) == 2:
-				x1 = round(line[0][0], 3)
-				y1 = round(line[0][1], 3)
-				z1 = round(line[0][2], 3)
+				x1 = '{:.3f}'.format(round(line[0][0], 3))
+				y1 = '{:.3f}'.format(round(line[0][1], 3))
+				z1 = '{:.3f}'.format(round(line[0][2], 3))
 
-				x2 = round(line[1][0], 3)
-				y2 = round(line[1][1], 3)
-				z2 = round(line[1][2], 3)
+				x2 = '{:.3f}'.format(round(line[1][0], 3))
+				y2 = '{:.3f}'.format(round(line[1][1], 3))
+				z2 = '{:.3f}'.format(round(line[1][2], 3))
 				content += line_fmt.format(x1, y1, z1, x2, y2, z2)
 
 		return header + content + footer

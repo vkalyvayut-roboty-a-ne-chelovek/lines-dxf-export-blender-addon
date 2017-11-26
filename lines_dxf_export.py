@@ -1,9 +1,77 @@
+bl_info = {
+	"name": "Lines DXF Export",
+	"author": "6d7367",
+	"location": "View3D > Tools > Slicer Addon",
+	"version": (0, 1, 0),
+	"blender": (2, 7, 6),
+	"description": "Export selected object's edges to DXF file",
+	"wiki": "",
+	"category": "Import-Export"
+}
+
+
+def register():
+	bpy.utils.register_class(LinesDxfExportOperator)
+	bpy.utils.register_class(LinesDxfExportPanel)
+	
+
+
+def unregister():
+	bpy.utils.unregister_class(LinesDxfExportPanel)
+	bpy.utils.unregister_class(LinesDxfExportOperator)
+	pass
+
+
 import bpy
 import bmesh
 
+class LinesDxfExportPanel(bpy.types.Panel):
+	bl_space_type = "VIEW_3D"
+	bl_region_type = "TOOLS"
+	bl_category = "DXF Export"
+	bl_label = "DXF Export Addon"
+	# bl_context = "editmode"
+
+	def draw(self, context):
+		self.layout.prop(context.scene, "lines_dxf_export_file_path")
+		self.layout.operator("object.lines_dxf_export")
+
+	@classmethod
+	def register(cls):
+		pass
+
+	@classmethod
+	def unregister(cls):
+		pass
+
+class LinesDxfExportOperator(bpy.types.Operator):
+	bl_idname = "object.lines_dxf_export"
+	bl_label = "Export Selected Edges to DXF"
+
+	def execute(self, context):
+		file_path = context.scene.lines_dxf_export_file_path
+		exprt = LinesDxfExporter()
+		if (file_path):
+			exprt.export(file_path)
+
+		del exprt
+		
+		return {'FINISHED'}
+
+	@classmethod
+	def register(cls):
+		bpy.types.Scene.lines_dxf_export_file_path = bpy.props.StringProperty(
+			name = "",
+			description = "path to dxf file",
+			default = ''
+		)
+
+	@classmethod
+	def unregister(cls):
+		pass
 
 
-class LinesDxfExport():
+class LinesDxfExporter():
 	def __init__(self):
 		pass
 

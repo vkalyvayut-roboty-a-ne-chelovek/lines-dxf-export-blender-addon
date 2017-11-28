@@ -3,7 +3,7 @@ bl_info = {
 	"author": "6d7367",
 	"location": "View3D > Tools > Slicer Addon",
 	"version": (0, 1, 0),
-	"blender": (2, 7, 6),
+	"blender": (2, 6, 9),
 	"description": "Export selected object's edges to DXF file",
 	"wiki": "",
 	"category": "Import-Export"
@@ -53,15 +53,18 @@ class LinesDxfExportOperator(bpy.types.Operator):
 		exprt = LinesDxfExporter()
 		if (file_path):
 			exprt.export(file_path)
-
-		del exprt
+			del exprt
+			return {'FINISHED'}
 		
-		return {'FINISHED'}
+		self.report(type = {'ERROR_INVALID_INPUT'}, message = "Empty path to DXF file output" )
+		return {'CANCELLED'}
+
+		
 
 	@classmethod
 	def register(cls):
 		bpy.types.Scene.lines_dxf_export_file_path = bpy.props.StringProperty(
-			name = "",
+			name = "Path to DXF file output",
 			description = "path to dxf file",
 			default = ''
 		)
